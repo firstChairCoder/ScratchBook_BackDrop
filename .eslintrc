@@ -1,0 +1,15 @@
+{
+    "extends": "@react-native-community",
+    "plugins": ["prettier"],
+    "parser": "@babel/eslint-parser",
+    "rules": {
+      "quotes": "off",
+      "comma-dangle": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "endOfLine": "auto"
+        }
+      ]
+    }
+  }
