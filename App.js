@@ -2,7 +2,7 @@ import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { RootNavigator } from "./src/navigation";
 import { NavigationContainer } from "@react-navigation/native";
-import { View, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { useFonts } from "expo-font";
@@ -44,6 +44,9 @@ export default function App() {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size={"large"} color={"#000"} />
+        <Text style={{ fontFamily: "SFProDisplay-Regular", fontSize: 14 }}>
+          Loading...
+        </Text>
       </View>
     );
   }

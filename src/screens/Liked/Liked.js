@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from "react";
 import {
   View,
@@ -7,10 +8,11 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 
 import { removeFavorites } from "../../redux/actions/actions";
+import Heart from "../../../assets/svg/Heart";
+import Header from "../../components/Header";
 
 const styles = StyleSheet.create({
   container: {
@@ -18,14 +20,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     paddingTop: 20,
     backgroundColor: "#FFF",
-  },
-  headerWrapper: {
-    height: 74,
-    justifyContent: "center",
-  },
-  header: {
-    fontFamily: "SFProDisplay-Semibold",
-    fontSize: 16,
   },
   card: {
     height: 175,
@@ -74,31 +68,47 @@ const Liked = () => {
         <View style={styles.card}>
           <Image
             style={[
-              {
-                aspectRatio:
-                  width / height === undefined ? 3 / 2 : width / height,
-              },
+              // {
+              //   aspectRatio:
+              //     width / height === undefined ? 3 / 2 : width / height,
+              // },
               styles.bigImage,
             ]}
             source={{ uri: item?.image?.url }}
-            resizeMode={"contain"}
           />
 
-          <View
+          {/* <View
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
-              alignItems: "center",
+              alignItems: "flex-start",
               marginTop: 5,
             }}
+          > */}
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+              marginTop: 5,
+            }}
+            onPress={() => handleRemoveFavorites(item)}
           >
-            <TouchableOpacity onPress={() => handleRemoveFavorites(item)}>
-              <View style={{ flexDirection: "row" }}>
-                <Text style={styles.name}>{item.name}</Text>
-                <FontAwesome name={"heart"} size={15} color={"red"} />
-              </View>
-            </TouchableOpacity>
-          </View>
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={styles.name}>{item.name}</Text>
+              <Heart
+                width={16}
+                height={14}
+                color={"#DE0202"}
+                stroke={"#DE0202"}
+              />
+            </View>
+          </TouchableOpacity>
+          {/* </View> */}
         </View>
       );
     }
@@ -115,9 +125,7 @@ const Liked = () => {
   return (
     <View style={styles.container}>
       {/* header */}
-      <View style={styles.headerWrapper}>
-        <Text style={styles.header}>All Cats</Text>
-      </View>
+      <Header label={"Cats I Like"} />
 
       <View style={{ flex: 1, marginTop: 8 }}>
         {favorites.length === 0 ? (
@@ -135,6 +143,7 @@ const Liked = () => {
             bounces={false}
             keyExtractor={(_, index) => index.toString()}
             renderItem={renderImagesRow}
+            numColumns={2}
           />
         )}
       </View>
