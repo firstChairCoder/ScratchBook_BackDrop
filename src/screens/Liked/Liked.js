@@ -11,7 +11,9 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 
 import { removeFavorites } from "../../redux/actions/actions";
+
 import Heart from "../../../assets/svg/Heart";
+
 import Header from "../../components/Header";
 
 const styles = StyleSheet.create({
@@ -21,10 +23,18 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     backgroundColor: "#FFF",
   },
+  fillerWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  fillerText: {
+    fontSize: 16,
+    fontFamily: "SFProDisplay-Regular",
+  },
   card: {
     height: 175,
     width: 150,
-    // flex: 1,
     justifyContent: "flex-start",
     marginRight: 25,
     marginBottom: 25,
@@ -36,7 +46,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "lime",
     borderWidth: 1,
-    // resizeMode: "contain",
   },
   name: {
     fontSize: 16,
@@ -77,14 +86,6 @@ const Liked = () => {
             source={{ uri: item?.image?.url }}
           />
 
-          {/* <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "flex-start",
-              marginTop: 5,
-            }}
-          > */}
           <TouchableOpacity
             style={{
               flexDirection: "row",
@@ -108,19 +109,10 @@ const Liked = () => {
               />
             </View>
           </TouchableOpacity>
-          {/* </View> */}
         </View>
       );
     }
   };
-
-  //   if (loading) {
-  //     return (
-  //       <View style={{ flex: 1, padding: 24 }}>
-  //         <ActivityIndicator size={"large"} color={"maroon"} />
-  //       </View>
-  //     );
-  //   }
 
   return (
     <View style={styles.container}>
@@ -129,10 +121,8 @@ const Liked = () => {
 
       <View style={{ flex: 1, marginTop: 8 }}>
         {favorites.length === 0 ? (
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <Text style={{ fontSize: 16, fontFamily: "SFProDisplay-Regular" }}>
+          <View style={styles.fillerWrapper}>
+            <Text style={styles.fillerText}>
               Your favorites will be displayed here
             </Text>
           </View>

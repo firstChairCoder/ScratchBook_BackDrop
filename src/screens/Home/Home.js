@@ -1,12 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
   StyleSheet,
   FlatList,
-  ActivityIndicator,
   Image,
   TouchableOpacity,
   Dimensions,
@@ -15,16 +14,17 @@ import { useSelector, useDispatch } from "react-redux";
 
 import {
   getCats,
-  getMoreCats,
   addFavorites,
   removeFavorites,
 } from "../../redux/actions/actions";
 
 import Heart from "../../../assets/svg/Heart";
+
 import Header from "../../components/Header";
-import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
+import Loading from "../../components/Loading";
 
 const { width, height } = Dimensions.get("window");
+const ITEM_HEIGHT = height * 0.05;
 
 const styles = StyleSheet.create({
   container: {
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   item: {
     flexDirection: "row",
-    height: height * 0.05,
+    height: ITEM_HEIGHT,
     alignItems: "center",
     marginVertical: height * 0.0125,
   },
@@ -44,25 +44,29 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "lime",
   },
   name: {
     fontSize: 14,
     fontFamily: "SFProDisplay-Regular",
     marginLeft: 15,
   },
+  btn: {
+    flex: 1,
+    width: 60,
+    alignSelf: "flex-end",
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
 });
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(0);
+  const [amount, setAmount] = useState(15);
 
   const { cats, favorites } = useSelector((state) => state.catsReducer);
   const dispatch = useDispatch();
 
-  const fetchCats = () => dispatch(getCats(100, page));
-
-  // const fetchMoreCats = () => dispatch(getMoreCats(15, page));
+  const fetchCats = () => dispatch(getCats(amount));
 
   const addToFavorites = (cat) => dispatch(addFavorites(cat));
   const removeFromFavorites = (cat) => dispatch(removeFavorites(cat));
@@ -86,24 +90,17 @@ const Home = () => {
   useEffect(() => {
     fetchCats();
     setLoading(false);
-  }, [page >= 1]);
+  }, [amount]);
 
   const renderImagesRow = ({ item }) => {
     return (
       <View style={styles.item}>
         <Image style={styles.image} source={{ uri: item?.image?.url }} />
         <Text style={styles.name}>{item.name}</Text>
-        {/* {selected === null && ( */}
         <View style={{ flex: 1 }}>
           <TouchableOpacity
             activeOpacity={0.8}
-            style={{
-              flex: 1,
-              width: 60,
-              alignSelf: "flex-end",
-              alignItems: "flex-end",
-              justifyContent: "center",
-            }}
+            style={styles.btn}
             onPress={() =>
               ifExists(item)
                 ? handleRemoveFavorites(item)
@@ -118,38 +115,43 @@ const Home = () => {
             />
           </TouchableOpacity>
         </View>
-        {/* )} */}
       </View>
     );
   };
 
   const handleLoadMore = () => {
-    setPage(page + 1);
+    setAmount(amount + 15);
   };
 
+  const getItemLayout = useCallback(
+    (_, index) => ({
+      length: ITEM_HEIGHT,
+      offset: ITEM_HEIGHT * index,
+      index,
+    }),
+    []
+  );
+
   if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size={"large"} color={"maroon"} />
-        <Text>Loading...</Text>
-      </View>
-    );
+    return <Loading />;
   }
 
   return (
     <View style={styles.container}>
       {/* header */}
       <Header label="All Cats" />
-
+      {/* list */}
       <FlatList
         data={cats}
         showsVerticalScrollIndicator={false}
         bounces={false}
         keyExtractor={(_, index) => index.toString()}
         renderItem={renderImagesRow}
-        initialNumToRender={20}
+        getItemLayout={getItemLayout}
+        maxToRenderPerBatch={20}
+        windowSize={15}
         onEndReached={handleLoadMore}
-        // onEndReachedThreshold={10}
+        onEndReachedThreshold={50}
       />
     </View>
   );
