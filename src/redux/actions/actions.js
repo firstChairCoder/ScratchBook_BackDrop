@@ -1,4 +1,6 @@
 /* eslint-disable no-unreachable */
+import config from "../../../config";
+
 //Action types declaration
 export const GET_CATS = "GET_CATS";
 export const ADD_TO_FAVORITES = "ADD_TO_FAVORITES";
@@ -8,10 +10,10 @@ export const getCats = (amount) => {
   try {
     return async (dispatch) => {
       const response = await fetch(
-        `https://api.thecatapi.com/v1/breeds?limit=${amount}`,
+        `${config.API_URL}?limit=${amount}`,
         {
           headers: {
-            "x-api-key": "68742e96-887f-4f9f-a489-ba3735d55609",
+            "x-api-key": `${config.API_KEY}`,
           },
         }
       );
