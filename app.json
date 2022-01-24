@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "olongboinJS",
-    "slug": "olongboinJS",
+    "name": "CatScratch Book",
+    "slug": "A kitty directory",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,6 +20,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.6md9.catscratchbook",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
