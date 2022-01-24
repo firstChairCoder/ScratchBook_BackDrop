@@ -24,7 +24,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <PersistGate loading={<Loading />} persistor={persistor}>
+      <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
           <SafeAreaProvider>
             <RootNavigator />

@@ -1,20 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import { removeFavorites } from "../../redux/actions/actions";
 
-import Heart from "../../../assets/svg/Heart";
-
 import Header from "../../components/Header";
+import { FaveItem } from "../../components/FaveItem";
 
 const styles = StyleSheet.create({
   container: {
@@ -32,29 +24,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "SFProDisplay-Regular",
   },
-  card: {
-    height: 175,
-    width: 150,
-    justifyContent: "flex-start",
-    marginRight: 25,
-    marginBottom: 25,
-    borderRadius: 10,
-  },
-  bigImage: {
-    maxWidth: 150,
-    minHeight: 150,
-    borderRadius: 10,
-    borderColor: "lime",
-    borderWidth: 1,
-  },
-  name: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: "400",
-    fontFamily: "SFProDisplay-Regular",
-    maxWidth: "80%",
-    flexWrap: "wrap",
-  },
 });
 
 const Liked = () => {
@@ -67,52 +36,20 @@ const Liked = () => {
     removeFromFavorites(cat);
   };
 
-  const renderImagesRow = ({ item }) => {
+  function renderImagesRow({ item }) {
     const width = item?.image?.width;
-    const height = item?.image?.height;
     if (width === undefined) {
       return <></>;
     } else {
       return (
-        <View style={styles.card}>
-          <Image
-            style={[
-              // {
-              //   aspectRatio:
-              //     width / height === undefined ? 3 / 2 : width / height,
-              // },
-              styles.bigImage,
-            ]}
-            source={{ uri: item?.image?.url }}
-          />
-
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              marginTop: 5,
-            }}
-            onPress={() => handleRemoveFavorites(item)}
-          >
-            <View
-              style={{
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <Text style={styles.name}>{item.name}</Text>
-              <Heart
-                width={16}
-                height={14}
-                color={"#DE0202"}
-                stroke={"#DE0202"}
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
+        <FaveItem
+          uri={item?.image?.url}
+          onPress={() => handleRemoveFavorites(item)}
+          name={item.name}
+        />
       );
     }
-  };
+  }
 
   return (
     <View style={styles.container}>
