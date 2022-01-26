@@ -5,6 +5,7 @@
     "rules": {
       "quotes": "off",
       "comma-dangle": "off",
+      "react-hooks/exhaustive-deps": "off",
       "prettier/prettier": [
         "error",
         {

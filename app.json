@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "CatScratch Book",
-    "slug": "A kitty directory",
+    "name": "olongboinJS",
+    "slug": "olongboinjs",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/cat_avatar.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/gato_unsplash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -20,11 +20,11 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.6md9.catscratchbook",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.md.olongboinjs"
     },
     "web": {
       "favicon": "./assets/favicon.png"
