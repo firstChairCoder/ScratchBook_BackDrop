@@ -33,14 +33,14 @@ npm start
 For Yarn:
 ```
 yarn
-yarn start \\expo start works too since this was built using the Expo blank workflow
+yarn start 
 ```
+\\expo start works too since this was built using the Expo blank workflow
 
-##Assets credits
+## Assets credits
 
 #### Fonts
-* [SFPro Display Font]
-(https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg) by [Apple](https://developer.apple.com/fonts/).
+* [SFPro Display Font](https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg) by [Apple](https://developer.apple.com/fonts/).
 This was further converted for optimal use on Windows and Android platforms by converting the font files from OpenType Font(OTF) to TrueType Font(TTF) using [Online Font Converter](https://onlinefontconverter.com/)
 
 #### Images
