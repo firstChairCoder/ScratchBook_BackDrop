@@ -1,9 +1,11 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from "react";
 import { View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import HomeScreen from "../screens/Home";
 import LikedScreen from "../screens/Liked";
+
 import Kitty from "../../assets/svg/Kitty";
 import Heart from "../../assets/svg/Heart";
 
@@ -16,7 +18,7 @@ export const RootNavigator = () => {
         headerShown: false,
         tabBarActiveTintColor: "#212227",
         tabBarInactiveTintColor: "rgba(33,34,39,0.2)",
-        tabBarLabelStyle: { marginBottom: 17, color: "#000" },
+        tabBarLabelStyle: { marginBottom: 17 },
         tabBarStyle: {
           height: 73,
           borderTopWidth: 0,
@@ -30,9 +32,9 @@ export const RootNavigator = () => {
         component={HomeScreen}
         options={{
           title: "All cats",
-          tabBarIcon: ({ focused }) => (
-            <View style={{ marginTop: 17 }}>
-              <Kitty color={focused ? "#212227" : "rgba(33, 34, 39, 0.2)"} />
+          tabBarIcon: ({ color, focused }) => (
+            <View style={{ marginTop: 10 }}>
+              <Kitty color={color} />
             </View>
           ),
         }}
@@ -42,10 +44,10 @@ export const RootNavigator = () => {
         component={LikedScreen}
         options={{
           title: "Cats I like",
-          tabBarIcon: ({ focused }) => (
-            <View style={{ marginTop: 17 }}>
+          tabBarIcon: ({ color, focused }) => (
+            <View style={{ marginTop: 10 }}>
               <Heart
-                color={focused ? "#212227" : "rgba(33, 34, 39, 0.2)"}
+                color={color}
                 width={26}
                 height={22}
                 stroke={focused ? "#212227" : "rgba(33, 34, 39, 0.2)"}

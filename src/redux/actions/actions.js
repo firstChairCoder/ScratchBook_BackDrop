@@ -1,5 +1,6 @@
 /* eslint-disable no-unreachable */
 import config from "../../../config";
+import { Alert } from "react-native";
 
 //Action types declaration
 export const GET_CATS = "GET_CATS";
@@ -10,7 +11,7 @@ export const getCats = (amount) => {
   try {
     return async (dispatch) => {
       const response = await fetch(
-        `${config.API_URL}?limit=${amount}`,
+        `https://api.thecatapi.com/v1/breeds?limit=${amount}&page=0`,
         {
           headers: {
             "x-api-key": `${config.API_KEY}`,
@@ -24,12 +25,13 @@ export const getCats = (amount) => {
           payload: json,
         });
       } else {
-        console.log("Unable to fetch data from the API BASE URL!");
+        Alert.alert("Unable to fetch data from the API BASE URL!");
       }
     };
   } catch (error) {
     // Add custom logic to handle errors
-    console.log(error);
+    // console.error(error);
+    Alert.alert(error);
   }
 };
 

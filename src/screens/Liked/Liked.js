@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { removeFavorites } from "../../redux/actions/actions";
 
 import Header from "../../components/Header";
-import { FaveItem } from "../../components/FaveItem";
+import FaveItem from "../../components/FaveItem";
 
 const styles = StyleSheet.create({
   container: {
@@ -37,18 +37,15 @@ const Liked = () => {
   };
 
   function renderImagesRow({ item }) {
-    const width = item?.image?.width;
-    if (width === undefined) {
-      return <></>;
-    } else {
-      return (
-        <FaveItem
-          uri={item?.image?.url}
-          onPress={() => handleRemoveFavorites(item)}
-          name={item.name}
-        />
-      );
-    }
+    return (
+      <FaveItem
+        uri={
+          item?.image?.url ?? "https://img.icons8.com/ios-filled/3x/github.png"
+        } //variable image display
+        onPress={() => handleRemoveFavorites(item)}
+        name={item.name}
+      />
+    );
   }
 
   return (
