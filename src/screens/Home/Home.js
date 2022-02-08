@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   StyleSheet,
@@ -15,13 +14,11 @@ import {
   removeFavorites,
 } from "../../redux/actions/actions";
 
-import Heart from "../../../assets/svg/Heart";
-
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
-import ListItem from "../../components/ListItem";
+import { ListItem } from "../../components/ListItem";
 
-const { width, height } = Dimensions.get("window");
+const { height } = Dimensions.get("window");
 const ITEM_HEIGHT = height * 0.05;
 
 const styles = StyleSheet.create({
@@ -37,8 +34,6 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [newLoading, setNewLoading] = useState(false);
   const [amount, setAmount] = useState(15);
-  // const scrollY = useRef(new Animated.Value(0)).current;
-  // const ITEM_SIZE = ITEM_HEIGHT + 25;
 
   const { cats, favorites } = useSelector((state) => state.catsReducer);
   const dispatch = useDispatch();
@@ -56,7 +51,7 @@ const Home = () => {
     removeFromFavorites(cat);
   };
 
-  const ifExists = (cat) => {
+  const ifLiked = (cat) => {
     if (favorites.filter((item) => item.id === cat.id).length > 0) {
       return true;
     }
@@ -68,33 +63,36 @@ const Home = () => {
     setTimeout(() => {
       fetchCats();
       setLoading(false);
-    }, 1500);
+    }, 3000);
   }, []);
 
   function renderImagesRow({ item }) {
     return (
       <ListItem
-        uri={item?.image?.url}
+        uri={
+          item?.image?.url ?? "https://img.icons8.com/ios-filled/2x/github.png"
+        } //variable image display
         name={item.name}
-        color={ifExists(item) ? "#DE0202" : "transparent"}
-        stroke={ifExists(item) ? "#DE0202" : "rgba(33, 34, 39, 0.2)"}
+        color={ifLiked(item) ? "#DE0202" : "transparent"}
+        stroke={ifLiked(item) ? "#DE0202" : "rgba(33, 34, 39, 0.2)"}
         onHeartPress={() =>
-          ifExists(item)
-            ? handleRemoveFavorites(item)
-            : handleAddFavorites(item)
+          ifLiked(item) ? handleRemoveFavorites(item) : handleAddFavorites(item)
         }
       />
     );
   }
-  const handleLoadMore = () => {
+
+  //dynamic scroll load handler
+  const handleLoadMore = useCallback(() => {
     setAmount(amount + 15);
     setNewLoading(true);
     setTimeout(() => {
       fetchCats();
       setNewLoading(false);
-    }, 1500);
-  };
+    }, 2000);
+  }, [amount]);
 
+  //Callback method to adjust variable sized images to fit the given layout without cropping
   const getItemLayout = useCallback(
     (_, index) => ({
       length: ITEM_HEIGHT,
@@ -119,15 +117,11 @@ const Home = () => {
         bounces={false}
         keyExtractor={(_, index) => index.toString()}
         renderItem={renderImagesRow}
-        // onScroll={Animated.event(
-        //   [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-        //   { useNativeDriver: false }
-        // )}
+        removeClippedSubviews
+        renderToHardwareTextureAndroid
         getItemLayout={getItemLayout}
-        maxToRenderPerBatch={20}
-        windowSize={15}
         onEndReached={cats.length > 0 ? handleLoadMore : null}
-        onEndReachedThreshold={0}
+        onEndReachedThreshold={0.2}
       />
       {newLoading && <ActivityIndicator size={"large"} color={"maroon"} />}
     </View>
