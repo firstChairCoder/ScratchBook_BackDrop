@@ -1,20 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from "react";
+import { Platform, StatusBar, useColorScheme } from "react-native";
+import { UtilityThemeProvider } from "react-native-design-utility";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { darkTheme, lightTheme } from "@constants/extraTheme";
+import { HomeScreen } from "@screens/HomeScreen";
+
+import { theme } from "./src/theme";
+
+const Stack = createStackNavigator();
 
 export default function App() {
+  const scheme = useColorScheme();
+  // console.log(scheme);
+  const isDarkMode = scheme === "dark";
+
+  useEffect(() => {
+    StatusBar.setBarStyle(isDarkMode ? "light-content" : "dark-content");
+    if (Platform.OS === "android") {
+      StatusBar.setBackgroundColor("rgba(0,0,0,0)");
+      StatusBar.setTranslucent(true);
+    }
+  }, [scheme, isDarkMode]);
+
   return (
-    <View style={styles.container}>
-      <Text>A second chance at a first impression!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <UtilityThemeProvider theme={theme}>
+      <NavigationContainer theme={isDarkMode ? darkTheme : lightTheme}>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={HomeScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </UtilityThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
