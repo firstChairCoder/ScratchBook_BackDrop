@@ -18,7 +18,7 @@ export const HomeScreen = () => {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text size={32} color={"greyLight"}>
+      <Text size={32} color={"greyLight"} font="italic">
         A second chance at a first impression!
       </Text>
     </View>
