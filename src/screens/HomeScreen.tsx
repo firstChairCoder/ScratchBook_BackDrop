@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "@react-navigation/native";
-import { StyleSheet, Text, View } from "react-native";
-import { ItemCard, OfflineNotice } from "@components";
+import { StyleSheet, View } from "react-native";
+import { FaveCard } from "@components";
 
 const styles = StyleSheet.create({
   container: {
@@ -20,8 +20,8 @@ export const HomeScreen = () => {
   return (
     <View style={[styles.container, { backgroundColor: "lightblue" }]}>
       {/* <ItemCard /> */}
-      <Text>Hello</Text>
-      <OfflineNotice />
+      {/* <OfflineNotice /> */}
+      <FaveCard />
     </View>
   );
 };
