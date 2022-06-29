@@ -59,7 +59,7 @@ export const theme = {
       bold: "700"
     },
     spacing: {
-      tight: 0.8,
+      tight: 0.5,
       normal: 1,
       wide: 1.5
     },
@@ -72,8 +72,7 @@ export const theme = {
     fonts: {
       base: null,
       semibold: "SemiBold",
-      italic: "Italic",
-      light: "Light",
+      bold: "Bold",
       regular: "Regular",
       medium: "Medium"
     }

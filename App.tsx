@@ -1,24 +1,21 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Platform, StatusBar, useColorScheme } from "react-native";
 import { UtilityThemeProvider } from "react-native-design-utility";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 import {
-  Poppins_300Light,
   Poppins_400Regular,
-  Poppins_400Regular_Italic,
   Poppins_500Medium,
-  Poppins_600SemiBold
+  Poppins_600SemiBold,
+  Poppins_700Bold
 } from "@expo-google-fonts/poppins";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { darkTheme, lightTheme } from "@constants/extraTheme";
-import { HomeScreen } from "@screens/HomeScreen";
+import RootNavigator from "@navigation/Root";
 
 import { theme } from "./src/theme";
-
-const Stack = createStackNavigator();
 
 export default function App() {
   const scheme = useColorScheme();
@@ -29,7 +26,7 @@ export default function App() {
   useEffect(() => {
     StatusBar.setBarStyle(isDarkMode ? "light-content" : "dark-content");
     if (Platform.OS === "android") {
-      StatusBar.setBackgroundColor("rgba(0,0,0,0)");
+      StatusBar.setBackgroundColor(isDarkMode ? "#000" : "#FFF");
       StatusBar.setTranslucent(true);
     }
   }, [scheme, isDarkMode]);
@@ -42,11 +39,10 @@ export default function App() {
 
         // pre-load/cache assets: images, fonts, and videos
         await Font.loadAsync({
-          Light: Poppins_300Light,
           Regular: Poppins_400Regular,
-          Italic: Poppins_400Regular_Italic,
           Medium: Poppins_500Medium,
-          SemiBold: Poppins_600SemiBold
+          SemiBold: Poppins_600SemiBold,
+          Bold: Poppins_700Bold
         });
       } catch (e) {
         // console.warn(e);
@@ -76,12 +72,12 @@ export default function App() {
   }
 
   return (
-    <UtilityThemeProvider theme={theme}>
-      <NavigationContainer theme={isDarkMode ? darkTheme : lightTheme}>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </UtilityThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <UtilityThemeProvider theme={theme}>
+        <NavigationContainer theme={isDarkMode ? darkTheme : lightTheme}>
+          <RootNavigator />
+        </NavigationContainer>
+      </UtilityThemeProvider>
+    </GestureHandlerRootView>
   );
 }
