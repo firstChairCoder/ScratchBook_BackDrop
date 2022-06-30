@@ -19,7 +19,8 @@ export const darkTheme = {
     text: palette.white,
     tabBar: palette.black,
     iconWhite: palette.black,
-    iconBlack: palette.white
+    iconBlack: palette.white,
+    ...palette
     // offBlack: palette.white,
     //     dynamicBackground: palette.dynamicBlack,
     //     shadow: palette.transparent,

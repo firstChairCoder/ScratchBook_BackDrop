@@ -78,7 +78,7 @@ export default function App() {
   return (
     <UtilityThemeProvider theme={theme}>
       <NavigationContainer theme={isDarkMode ? darkTheme : lightTheme}>
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={HomeScreen} />
         </Stack.Navigator>
       </NavigationContainer>

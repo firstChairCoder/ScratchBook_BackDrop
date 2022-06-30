@@ -1,14 +1,15 @@
 import React from "react";
 import { useTheme } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
-import { Text } from "react-native-design-utility";
+import { FaveCard } from "@components";
 
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     backgroundColor: "#fff",
     flex: 1,
-    justifyContent: "center"
+    justifyContent: "center",
+    paddingHorizontal: 16
   }
 });
 
