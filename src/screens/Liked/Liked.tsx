@@ -1,42 +1,33 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { FlatList, StyleSheet, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 import { removeFavorites } from "../../redux/actions/actions";
-
 import Header from "../../components/Header";
 import FaveItem from "../../components/FaveItem";
+import EmptyFaveList from "../../components/EmptyFaveList";
+import type { Cat } from "../../types";
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#FFF",
     flex: 1,
     paddingHorizontal: 25,
-    paddingTop: 20,
-    backgroundColor: "#FFF",
-  },
-  fillerWrapper: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  fillerText: {
-    fontSize: 16,
-    fontFamily: "SFProDisplay-Regular",
-  },
+    paddingTop: 20
+  }
 });
 
 const Liked = () => {
   const { favorites } = useSelector((state) => state.catsReducer);
   const dispatch = useDispatch();
 
-  const removeFromFavorites = (cat) => dispatch(removeFavorites(cat));
+  const removeFromFavorites = (cat: Cat) => dispatch(removeFavorites(cat));
 
-  const handleRemoveFavorites = (cat) => {
+  const handleRemoveFavorites = (cat: Cat) => {
     removeFromFavorites(cat);
   };
 
-  function renderImagesRow({ item }) {
+  function renderImagesRow({ item }: any) {
     return (
       <FaveItem
         uri={
@@ -55,11 +46,7 @@ const Liked = () => {
 
       <View style={{ flex: 1, marginTop: 8 }}>
         {favorites.length === 0 ? (
-          <View style={styles.fillerWrapper}>
-            <Text style={styles.fillerText}>
-              Your favorites will be displayed here
-            </Text>
-          </View>
+          <EmptyFaveList />
         ) : (
           <FlatList
             data={favorites}

@@ -1,33 +1,32 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
-  View,
-  StyleSheet,
-  FlatList,
   Dimensions,
-  ActivityIndicator,
+  FlatList,
+  ActivityIndicator as RNActivityIndicator,
+  StyleSheet,
+  View
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
-  getCats,
   addFavorites,
-  removeFavorites,
+  getCats,
+  removeFavorites
 } from "../../redux/actions/actions";
-
 import Header from "../../components/Header";
-import Loading from "../../components/Loading";
+import ActivityIndicator from "../../components/ActivityIndicator";
 import { ListItem } from "../../components/ListItem";
+import type { Cat } from "../../types";
 
 const { height } = Dimensions.get("window");
 const ITEM_HEIGHT = height * 0.05;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingHorizontal: 25,
-    paddingTop: height * 0.025,
     backgroundColor: "#FFF",
-  },
+    flex: 1,
+    paddingTop: height * 0.025
+  }
 });
 
 const Home = () => {
@@ -40,19 +39,19 @@ const Home = () => {
 
   const fetchCats = () => dispatch(getCats(amount));
 
-  const addToFavorites = (cat) => dispatch(addFavorites(cat));
-  const removeFromFavorites = (cat) => dispatch(removeFavorites(cat));
+  const addToFavorites = (cat: Cat) => dispatch(addFavorites(cat));
+  const removeFromFavorites = (cat: Cat) => dispatch(removeFavorites(cat));
 
-  const handleAddFavorites = (cat) => {
+  const handleAddFavorites = (cat: Cat) => {
     addToFavorites(cat);
   };
 
-  const handleRemoveFavorites = (cat) => {
+  const handleRemoveFavorites = (cat: Cat) => {
     removeFromFavorites(cat);
   };
 
-  const ifLiked = (cat) => {
-    if (favorites.filter((item) => item.id === cat.id).length > 0) {
+  const ifLiked = (cat: Cat) => {
+    if (favorites.filter((item: any) => item.id === cat.id).length > 0) {
       return true;
     }
 
@@ -66,7 +65,7 @@ const Home = () => {
     }, 3000);
   }, []);
 
-  function renderImagesRow({ item }) {
+  function renderImagesRow({ item }: any) {
     return (
       <ListItem
         uri={
@@ -97,13 +96,13 @@ const Home = () => {
     (_, index) => ({
       length: ITEM_HEIGHT,
       offset: ITEM_HEIGHT * index,
-      index,
+      index
     }),
     []
   );
 
   if (loading) {
-    return <Loading />;
+    return <ActivityIndicator visible={loading} />;
   }
 
   return (
@@ -117,13 +116,14 @@ const Home = () => {
         bounces={false}
         keyExtractor={(_, index) => index.toString()}
         renderItem={renderImagesRow}
+        contentContainerStyle={{ paddingHorizontal: 25 }}
         removeClippedSubviews
         renderToHardwareTextureAndroid
         getItemLayout={getItemLayout}
         onEndReached={cats.length > 0 ? handleLoadMore : null}
         onEndReachedThreshold={0.2}
       />
-      {newLoading && <ActivityIndicator size={"large"} color={"maroon"} />}
+      {newLoading && <RNActivityIndicator size={"large"} color={"maroon"} />}
     </View>
   );
 };
