@@ -70,7 +70,12 @@ export const theme = {
       large: 2
     },
     fonts: {
-      base: null
+      base: null,
+      semibold: "SemiBold",
+      italic: "Italic",
+      light: "Light",
+      regular: "Regular",
+      medium: "Medium"
     }
   },
   color,
