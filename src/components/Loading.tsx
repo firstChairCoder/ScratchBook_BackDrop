@@ -1,16 +1,16 @@
 import React from "react";
-import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#FFF",
+    flex: 1,
+    justifyContent: "center"
   },
   loading: {
-    fontSize: 14,
-  },
+    fontSize: 14
+  }
 });
 
 const Loading = () => (

@@ -1,49 +1,55 @@
-import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import React, { FC } from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import Heart from "../../assets/svg/Heart";
 
 const styles = StyleSheet.create({
   card: {
-    height: 175,
-    width: 150,
-    justifyContent: "flex-start",
-    marginRight: 25,
-    marginBottom: 25,
     borderRadius: 10,
+    height: 175,
+    justifyContent: "flex-start",
+    marginBottom: 25,
+    marginRight: 25,
+    width: 150
   },
   bigImage: {
-    maxWidth: 150,
-    minHeight: 150,
     borderRadius: 10,
     borderWidth: 1,
+    maxWidth: 150,
+    minHeight: 150
   },
   name: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: "400",
-    fontFamily: "SFProDisplay-Regular",
-    maxWidth: "80%",
     flexWrap: "wrap",
+    fontFamily: "SFProDisplay-Regular",
+    fontSize: 16,
+    fontWeight: "400",
+    lineHeight: 24,
+    maxWidth: "80%"
   },
   label: {
     flexDirection: "row",
-    marginTop: 5,
+    marginTop: 5
   },
   labelWrapper: {
-    width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
-  },
+    width: "100%"
+  }
 });
 
-const FaveItem = ({ uri, onPress, name }) => {
+interface FaveItemProps {
+  uri: string;
+  onPress: () => void;
+  name: string;
+}
+
+const FaveItem: FC<FaveItemProps> = ({ uri, onPress, name }) => {
   return (
     <View style={styles.card}>
       <Image
         style={styles.bigImage}
         source={{
-          uri,
+          uri
         }}
       />
 
